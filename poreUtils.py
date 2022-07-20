@@ -3,6 +3,8 @@
 Created on Wed Jul 13 16:47:49 2022
 
 @author: Mmr Sagar
+Phd Student | AG Alves 
+MPI for Multidisciplinary Sciences 
 =====================================
 
 Utility functions for pore analysis 
