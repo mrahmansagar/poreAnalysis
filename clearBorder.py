@@ -2,7 +2,9 @@
 """
 Created on Fri Jul 22 11:52:19 2022
 
-@author: Manager
+@author: Mmr Sagar
+PhD Student | AG Alves 
+MPI for Multidisciplinary Sciences, Germany 
 """
 
 import time 
