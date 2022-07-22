@@ -57,7 +57,7 @@ def swigObjt2uint8Array(swigPyObj, xdim, ydim, zdim, plot=False):
 
 
 
-def norm16bit(v):
+def norm16bit(v, minVal, maxVal):
     """
     NORM16BIT function takes an array and normalized it before converting it into 
     a 16 bit unsigned integer and returns it.
@@ -66,6 +66,12 @@ def norm16bit(v):
     ----------
     v : numpy.ndarray
         Array of N dimension.
+    minVal : number 
+        Any value that needs to be used as min value for normalization. If no
+        value is provided then it uses min value of the given array. The default is None.
+    maxVal : number 
+        Any value that needs to be used as max value for normalization. If no
+        value is provided then it uses max value of the given array. The default is None.
 
     Returns
     -------
@@ -74,18 +80,21 @@ def norm16bit(v):
 
     """
     
-    mn = v.min()
-    mx = v.max()
+    if minVal == None:
+        minVal = v.min()
+    
+    if maxVal == None:
+        maxVal = v.max()
       
-    mx -= mn
+    maxVal -= minVal
       
-    v = ((v - mn)/mx) * 65535
+    v = ((v - minVal)/maxVal) * 65535
     
     return v.astype(np.uint16)
     
     
     
-def norm8bit(v):
+def norm8bit(v, minVal=None, maxVal=None):
     """
     NORM8BIT function takes an array and normalized it before converting it into 
     a 8 bit unsigned integer and returns it.
@@ -94,6 +103,12 @@ def norm8bit(v):
     ----------
     v : numpy.ndarray
         Array of N dimension.
+    minVal : number 
+        Any value that needs to be used as min value for normalization. If no
+        value is provided then it uses min value of the given array. The default is None.
+    maxVal : number 
+        Any value that needs to be used as max value for normalization. If no
+        value is provided then it uses max value of the given array. The default is None.
 
     Returns
     -------
@@ -101,13 +116,15 @@ def norm8bit(v):
         Numpy Array of same dimension as input with data type as unsigned integer 8 bit
 
     """
+    if minVal == None:
+        minVal = v.min()
     
-    mn = v.min()
-    mx = v.max()
+    if maxVal == None:
+        maxVal = v.max()
       
-    mx -= mn
+    maxVal -= minVal
       
-    v = ((v - mn)/mx) * 255
+    v = ((v - minVal)/maxVal) * 255
     
     return v.astype(np.uint8)
 
