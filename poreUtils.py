@@ -163,8 +163,8 @@ def formatBasicStats(basic_stats, definition=False, result=True):
         
     if result:
         res_basic = {'VV': basic_stats.Vv,
-                     'SV': basic_stats.Cv,
-                     'MV': basic_stats.Vv,
+                     'SV': basic_stats.Sv,
+                     'MV': basic_stats.Mv,
                      'CV': basic_stats.Cv}
     
         basic_analysis['result'] = res_basic
