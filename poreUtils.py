@@ -201,8 +201,8 @@ def formatAnisotropyStats(anisotropy_stats, definition=False, result=True):
         anisotropy_analysis['definition'] = def_anisotropy
     
     if result:
-        res_anisotropy = {'E': anisotropy_stats.E,
-                          'I': anisotropy_stats.I}
+        res_anisotropy = {'I': anisotropy_stats.I,
+                          'E': anisotropy_stats.E}
     
         anisotropy_analysis['result'] = res_anisotropy
     
