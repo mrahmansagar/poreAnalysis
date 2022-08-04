@@ -57,7 +57,7 @@ def swigObjt2uint8Array(swigPyObj, xdim, ydim, zdim, plot=False):
 
 
 
-def norm16bit(v, minVal, maxVal):
+def norm16bit(v, minVal=None, maxVal=None):
     """
     NORM16BIT function takes an array and normalized it before converting it into 
     a 16 bit unsigned integer and returns it.
