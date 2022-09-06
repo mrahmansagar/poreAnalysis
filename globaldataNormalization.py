@@ -3,6 +3,9 @@
 Created on Tue Aug  2 14:34:52 2022
 
 @author: Mmr Sagar
+PhD Student | AG Alves 
+MPI for Multidisciplinary Sciences, Germany 
+
 """
 
 import os
@@ -16,15 +19,15 @@ from PIL import Image
 
 from poreUtils import *
 
-root_dir = 'D:\sagar\data'
+root_dir = 'D:\sagar\Data'
 
-samples = os.listdir(root_dir)
-
+#samples = os.listdir(root_dir)
+samples = ['MD_1264_B1_1_Z3.3mm_corr_phrt']
 
 roi_paths = []
 
 for s in samples:
-    sample_path = os.path.join(root_dir, s, 'roi')
+    sample_path = os.path.join(root_dir, s, 'tiles')
     #print(sample_path)
     if os.path.exists(sample_path):
         fpath = glob(sample_path+'\*')
@@ -36,8 +39,9 @@ for s in samples:
 globVol = []
 
 
-for r in tqdm(random.sample(roi_paths, 50)):
-    for aSlice in random.sample(os.listdir(r), 5):
+for r in tqdm(random.sample(roi_paths, 20)):
+#for r in tqdm(roi_paths):
+    for aSlice in random.sample(os.listdir(r), 10):
         im = Image.open(os.path.join(r, aSlice))
         imarray = np.array(im)
         #imarray = norm8bit(imarray)
