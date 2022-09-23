@@ -21,13 +21,13 @@ from poreUtils import *
 
 root_dir = 'D:\sagar\Data'
 
-#samples = os.listdir(root_dir)
-samples = ['MD_1264_B1_1_Z3.3mm_corr_phrt']
+samples = os.listdir(root_dir)
+#samples = ['MD_1264_B1_1_Z3.3mm_corr_phrt']
 
 roi_paths = []
 
 for s in samples:
-    sample_path = os.path.join(root_dir, s, 'tiles')
+    sample_path = os.path.join(root_dir, s, 'roi')
     #print(sample_path)
     if os.path.exists(sample_path):
         fpath = glob(sample_path+'\*')
@@ -39,9 +39,9 @@ for s in samples:
 globVol = []
 
 
-for r in tqdm(random.sample(roi_paths, 20)):
+for r in tqdm(random.sample(roi_paths, 50)):
 #for r in tqdm(roi_paths):
-    for aSlice in random.sample(os.listdir(r), 10):
+    for aSlice in random.sample(os.listdir(r), 20):
         im = Image.open(os.path.join(r, aSlice))
         imarray = np.array(im)
         #imarray = norm8bit(imarray)
