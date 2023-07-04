@@ -1,6 +1,8 @@
 __pycache__/
 poreUtils.cpython-39.pyc
 
+.ipynb_checkpoints/
+
 /Output/
 study_group.csv
 test.py
