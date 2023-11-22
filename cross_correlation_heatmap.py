@@ -83,7 +83,6 @@ plot.cross_corr_heatmap(data_dict)
 
 
 # Cross-Correlation of features for all scans irrespective of group 
-
 file_group = cntrl_vili_scans + bleo_vili_scans + bleo_scans
 file_regx = 'dth10.json'
 
