@@ -14,8 +14,11 @@ chatGPT_testGround.ipynb
 chatGPT_testGround.py
 cross_correlation_heatmap.ipynb
 
-/notebooks
+/notebooks/
 
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+
+/pyfiles/
