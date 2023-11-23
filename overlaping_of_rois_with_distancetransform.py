@@ -36,7 +36,6 @@ for i, fname in enumerate(tqdm(tiffs)):
     imarray = utils.norm8bit(imarray)
     vol[i, :, :] = imarray
     
-    
 
 # Available ROIs
 selected_rois = glob(roi_dir +'*')
