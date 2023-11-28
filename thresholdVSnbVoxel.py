@@ -11,7 +11,8 @@ Effect of threshold value
 
 """
 
-import os
+import os 
+os.sys.path.insert(0, 'E:\\dev\\packages')
 import random 
 from glob import glob 
 import numpy as np 
@@ -21,11 +22,11 @@ from tqdm import tqdm
 
 from PIL import Image
 
-from poreUtils import *
+from proUtils import utils
 
 # Only taking the rois into the consideration 
 
-root_dir = 'D:\sagar\Data'
+root_dir = 'E:\\Data\\sam_data\\new'
 
 samples = os.listdir(root_dir)
 #samples = ['MD_1264_B1_1_Z3.3mm_corr_phrt']
@@ -44,8 +45,14 @@ for s in samples:
 # Taking randomly selected slices into a volume   
 globVol = []
 
-for r in tqdm(random.sample(roi_paths, 30)):
-#for r in tqdm(roi_paths):
+# Number of randomly selcted rois for the calculation 
+nbOfvolumes = 30
+# Number of slices to be considered for the global volume 
+nbOfslices = 10
+
+selected_volumes = random.sample(roi_paths, 30)
+
+for r in tqdm(selected_volumes):
     for aSlice in random.sample(os.listdir(r), 10):
         im = Image.open(os.path.join(r, aSlice))
         imarray = np.array(im)
@@ -54,10 +61,10 @@ for r in tqdm(random.sample(roi_paths, 30)):
         
 globVol = np.asarray(globVol) 
 
-globVol = np.clip(globVol, 0.0005, 0.003)
+# New rois are already clipped 
+#globVol = np.clip(globVol, 0.0005, 0.003)
 
-globVol_8bit = norm8bit(globVol)
-
+globVol_8bit = utils.norm8bit(globVol)
 
 voxelCount = []
 thRange = range(0, 180)
