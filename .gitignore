@@ -18,6 +18,7 @@ interactive_overlaping_of_rois_with_distancetransform.ipynb
 pore_volume_and_fibrosis_correlation.ipynb
 extract_pore_features_with_porespy.ipynb
 extract_pore_features_with_pypore3d.ipynb
+tiles_generation_from_sample.ipynb
 
 /notebooks/
 
