@@ -19,6 +19,7 @@ pore_volume_and_fibrosis_correlation.ipynb
 extract_pore_features_with_porespy.ipynb
 extract_pore_features_with_pypore3d.ipynb
 tiles_generation_from_sample.ipynb
+segmentation3d_parameter_investigation.ipynb
 
 /notebooks/
 
