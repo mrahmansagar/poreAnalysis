@@ -7,11 +7,12 @@ Created on Thu Nov  9 12:03:35 2023
 import os 
 os.sys.path.insert(0, 'E:\\dev\\packages')
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy import ndimage as nd
-from skimage import img_as_ubyte
+from skimage import io, img_as_ubyte
 from skimage.measure import label
 from skimage.segmentation import watershed
-
+from skimage.draw import disk
 from tqdm import tqdm
 
 import porespy as ps
@@ -139,3 +140,41 @@ def make_pore_masks(roi_path, bin_th=55, dth=10, vol_range=None, seperate_msk=Tr
             utils.save_vol_as_slices(pore, fName)
 
 
+
+def make_3d_colormap(arr, xy_shape=(300,300), pos=None, radius=10, 
+                     colormap='jet', save_dir=None):
+
+    color_range = list(np.arange(int(np.min(arr)), int(np.max(arr))))
+    # Normalize the diameter to the range [0, 1] for colormap scaling
+    normalized_color_range =  [(value - min(color_range)) / (max(color_range) - min(color_range)) for value in color_range]
+    
+    colormap = plt.get_cmap('jet')
+    
+    color_list= colormap(normalized_color_range)
+    
+    color_bar = np.zeros((xy_shape[0], xy_shape[1], len(color_list), 4), dtype=np.float32)
+    
+    for index in range(color_bar.shape[2]):        
+        
+        if pos is None:
+            col = int(xy_shape[0]//2)
+            row = int(xy_shape[1]//2)
+
+        rr, cc = disk((row,col), radius)
+
+        color_bar[rr, cc, index] = color_list[index]*255
+    
+    if save_dir is not None:    
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+        
+        for num in tqdm(range(0, color_bar.shape[2])):
+            I = np.asarray(color_bar[:,:,num], dtype='uint8')
+            fName = os.path.join(save_dir, f'slice_{num:04d}.tif') 
+            io.imsave(fName, I)
+        
+    else:
+        return color_bar
+    
+
+        
