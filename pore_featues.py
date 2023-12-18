@@ -16,7 +16,30 @@ from skimage.draw import disk, rectangle
 import json
 
 class PoreFeatures:
+    """
+    PoreFeatures class for extracting and visualizing features from pore data.
+
+    Parameters:
+    - root_dir (str): The root directory containing pore data.
+
+    Methods:
+    - clear_features(): Clear the stored features.
+    - load_features(feature=None, mode='mean', sub_folder=None, file_pattern='*'): Load features from JSON files.
+    - draw_features_map(imarray, cmap='jet', cube_size=300, overlap=100, rec_bkg=True, bkg_transp=0.9): Draw features map.
+
+    Attributes:
+    - root_dir (str): The root directory containing pore data.
+    - found_files (list): List of found JSON files.
+    - features (list): List of extracted features.
+    - feature_as_circles (numpy.ndarray): Array representing the features map.
+    """
     def __init__(self, root_dir):
+        """
+        Initialize the PoreFeatures class with a root directory.
+
+        Parameters:
+        - root_dir (str): The root directory containing pore data.
+        """
         self.root_dir = root_dir
         self.found_files = []
         self.features = []
@@ -27,7 +50,18 @@ class PoreFeatures:
         self.features = []
         
     def load_features(self, feature=None, mode='mean', sub_folder=None, file_pattern='*'):
-        
+        """
+        Load features from JSON files.
+
+        Parameters:
+        - feature (str): The name of the feature to extract.
+        - mode (str): The extraction mode ('mean', 'median', 'all').
+        - sub_folder (str): Sub-folder within the root directory.
+        - file_pattern (str): Pattern for identifying relevant files.
+
+        Returns:
+        - list: List of extracted features.
+        """
         valid_modes = ['mean', 'median', 'all']
         if mode not in valid_modes:
             raise ValueError(f"Invalid mode: {mode}. Use one of {valid_modes}")
@@ -69,7 +103,20 @@ class PoreFeatures:
     
     def draw_features_map(self, imarray, cmap='jet', cube_size=300, overlap=100, 
                           rec_bkg=True, bkg_transp=0.9,):
-        
+        """
+        Draw features map on an input image array.
+
+        Parameters:
+        - imarray (numpy.ndarray): Input image array.
+        - cmap (str): Colormap for feature visualization.
+        - cube_size (int): Size of cubes.
+        - overlap (int): Overlap between cubes.
+        - rec_bkg (bool): Whether to include rectangles as background.
+        - bkg_transp (float): Background transparency.
+
+        Returns:
+        - numpy.ndarray: Array representing the features map.
+        """
         normalized_features = [(value - min(self.features)) / (max(self.features) - min(self.features)) for value in self.features]
         # Apply a colormap (e.g., 'viridis' for a perceptually uniform colormap)
         colormap = plt.get_cmap(cmap)
