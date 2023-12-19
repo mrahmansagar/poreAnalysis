@@ -24,7 +24,7 @@ class PoreFeatures:
 
     Methods:
     - clear_features(): Clear the stored features.
-    - load_features(feature=None, mode='mean', sub_folder=None, file_pattern='*'): Load features from JSON files.
+    - load_porespy_features(feature=None, mode='mean', sub_folder=None, file_pattern='*'): Load features from JSON files.
     - draw_features_map(imarray, cmap='jet', cube_size=300, overlap=100, rec_bkg=True, bkg_transp=0.9): Draw features map.
 
     Attributes:
@@ -44,20 +44,49 @@ class PoreFeatures:
         self.found_files = []
         self.features = []
         self.feature_as_circles = None
+    
+    def load_files(self, sub_folder=None, file_pattern='*'):
+        """
+        Load features from JSON files.
         
+        Parameters:
+        - sub_folder (str): Sub-folder within the root directory.
+        - file_pattern (str): Pattern for identifying relevant files.
+        
+        Returns:
+        - list: List of found files.
+        """
+        
+        # Construct the directory path based on the provided parameters
+        if sub_folder is None:
+            json_dir = os.path.join(self.root_dir, 'porespy')
+        else:
+            json_dir = os.path.join(self.root_dir, sub_folder)
+
+        # Use os.path.join for file_pattern as well
+        file_pattern = os.path.join(json_dir, file_pattern)
+        
+        # Use glob directly to find files
+        self.found_files = glob(file_pattern)
+        
+        print(f'found {len(self.found_files)} files in {json_dir}')
+    
+    def clear_files(self):
+        """ Clear the loaded files. """
+        self.found_files = []
+    
     def clear_features(self):
         """Clear the stored features."""
         self.features = []
         
-    def load_features(self, feature=None, mode='mean', sub_folder=None, file_pattern='*'):
+    def load_porespy_features(self, feature=None, mode='mean'):
         """
         Load features from JSON files.
 
         Parameters:
         - feature (str): The name of the feature to extract.
         - mode (str): The extraction mode ('mean', 'median', 'all').
-        - sub_folder (str): Sub-folder within the root directory.
-        - file_pattern (str): Pattern for identifying relevant files.
+        
 
         Returns:
         - list: List of extracted features.
@@ -65,18 +94,6 @@ class PoreFeatures:
         valid_modes = ['mean', 'median', 'all']
         if mode not in valid_modes:
             raise ValueError(f"Invalid mode: {mode}. Use one of {valid_modes}")
-
-        # Construct the directory path based on the provided parameters
-        if sub_folder is None:
-            json_dir = os.path.join(self.root_dir, 'porespy/')
-        else:
-            json_dir = os.path.join(self.root_dir, sub_folder, '/')
-
-        # Use os.path.join for file_pattern as well
-        file_pattern = os.path.join(json_dir, file_pattern)
-
-        # Use glob directly to find files
-        self.found_files = glob(file_pattern)
 
         for afile in self.found_files:
             with open(afile) as file:
