@@ -91,6 +91,15 @@ class PoreFeatures:
         Returns:
         - list: List of extracted features.
         """
+        valid_features = ['volume', 'bbox_volume', 'sphericity', 'surface_area',
+                          'convex_volume', 'equivalent_diameter_area', 'euler_number',
+                          'extent', 'axis_major_length', 'axis_minor_length', 'solidity']
+        
+        if feature is None:
+            print(f'feature not specified. Use one of {valid_features}')
+        elif feature not in valid_features:
+            raise ValueError(f"Invalid feature: {feature}. Use one of {valid_features}")
+        
         valid_modes = ['mean', 'median', 'all']
         if mode not in valid_modes:
             raise ValueError(f"Invalid mode: {mode}. Use one of {valid_modes}")
@@ -177,7 +186,8 @@ class PoreFeatures:
         plt.show()
         
         return self.feature_as_circles 
-        
+    
+    
         
     
     
