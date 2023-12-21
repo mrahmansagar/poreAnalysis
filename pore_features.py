@@ -171,7 +171,7 @@ class PoreFeatures:
         rect_size = cube_size - overlap
         max_radius = rect_size//2
         
-        for i, (afile, val) in enumerate(zip(self.found_files, self.features)):
+        for i, (afile, val) in enumerate(zip(self.found_files, normalized_features)):
             cube_cords = afile.split('\\')[-1]
             cube_cords = cube_cords.split('_bth')[0]
             xrange = cube_cords.split('x')[1]
