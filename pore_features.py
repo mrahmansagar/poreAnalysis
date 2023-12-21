@@ -12,7 +12,7 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 from skimage.draw import disk, rectangle
-
+from skimage import io
 import json
 
 class PoreFeatures:
@@ -26,7 +26,7 @@ class PoreFeatures:
     - clear_features(): Clear the stored features.
     - load_porespy_features(feature=None, mode='mean', sub_folder=None, file_pattern='*'): Load features from JSON files.
     - draw_features_map(imarray, cmap='jet', cube_size=300, overlap=100, rec_bkg=True, bkg_transp=0.9): Draw features map.
-
+    - save_features_map(save_dir=None, fileName='features_map.tif'): Save the features map as an image file.
     Attributes:
     - root_dir (str): The root directory containing pore data.
     - found_files (list): List of found JSON files.
@@ -45,6 +45,7 @@ class PoreFeatures:
         self.features = []
         self.feature_as_circles = None
     
+    #-------------------------------------------------------------------------#
     def load_files(self, sub_folder=None, file_pattern='*'):
         """
         Load features from JSON files.
@@ -71,14 +72,26 @@ class PoreFeatures:
         
         print(f'found {len(self.found_files)} files in {json_dir}')
     
+    #-------------------------------------------------------------------------#
+    
     def clear_files(self):
         """ Clear the loaded files. """
         self.found_files = []
     
+    #-------------------------------------------------------------------------#
+    
     def clear_features(self):
         """Clear the stored features."""
         self.features = []
-        
+    
+    #-------------------------------------------------------------------------#
+    
+    def set_features(self, new_features):
+        """Set a new list of extracted features."""
+        self.features = new_features
+    
+    #-------------------------------------------------------------------------#
+    
     def load_porespy_features(self, feature=None, mode='mean'):
         """
         Load features from JSON files.
@@ -123,9 +136,14 @@ class PoreFeatures:
                 
                 except Exception as e:
                     print(f"An unexpected error occurred: {e}")    
-                
+
+    #-------------------------------------------------------------------------#
+    
+    def get_features(self):
+        """Get the list of extracted features."""
         return self.features
     
+    #-------------------------------------------------------------------------#
     
     def draw_features_map(self, imarray, cmap='jet', cube_size=300, overlap=100, 
                           rec_bkg=True, bkg_transp=0.9,):
@@ -171,7 +189,8 @@ class PoreFeatures:
                 self.feature_as_circles[r, c, 3] = colors_list[2][3] - bkg_transp  # Alpha channel
         
             # Generate disk coordinates
-            rr, cc = disk((x+max_radius, y+max_radius), int(max_radius*val), shape=imarray.shape)
+            rr, cc = disk((x+max_radius, y+max_radius), int(max_radius*val),
+                          shape=imarray.shape)
         
             # Assign RGBA values to the corresponding region in ratio_colored
             self.feature_as_circles[rr, cc, 0] = colors_list[i][0]  # Red channel
@@ -185,12 +204,29 @@ class PoreFeatures:
         plt.imshow(self.feature_as_circles)
         plt.show()
         
-        return self.feature_as_circles 
+    #-------------------------------------------------------------------------#
     
+    def get_feature_map(self):
+        """Get the array representing the features map."""
+        return self.feature_as_circles
     
+    #-------------------------------------------------------------------------#
+    
+    def save_features_map(self, save_dir=None, fileName='features_map.tif'):
+        """
+        Save the features map as an image file.
+
+        Parameters:
+        - save_dir (str): Directory to save the image file. If None, save in 
+            the root directory.
+        - fileName (str): Name of the image file.
+        """
+        if save_dir is None:
+            file_path = os.path.join(self.root_dir, fileName)
+        else:
+            if not os.path.exists(save_dir):
+                os.makedirs(save_dir)
+            file_path = os.path.join(save_dir, fileName)
+            
+        io.imsave(file_path, self.feature_as_circles)
         
-    
-    
-    
-    
-    
