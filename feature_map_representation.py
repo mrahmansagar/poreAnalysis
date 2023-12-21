@@ -20,7 +20,7 @@ from proUtils import utils
 import matplotlib.pyplot as plt
 from glob import glob
 
-from pore_features import PoreFeatures
+from modules import PoreFeatures
 
 
 # data_dir
