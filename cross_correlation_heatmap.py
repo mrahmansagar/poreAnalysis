@@ -91,6 +91,11 @@ for aScan in file_group:
     fpath = os.path.join(root_dir, aScan, 'porespy')
     json_files += glob(fpath + '\*' + file_regx)
 
+file_group = con_scans
+file_regx = 'dth8.json'
+for aScan in file_group:
+    fpath = os.path.join(root_dir, aScan, 'porespy')
+    json_files += glob(fpath + '\*' + file_regx)
 
 for afile in json_files:
     f = open(afile)
