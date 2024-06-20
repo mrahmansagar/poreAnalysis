@@ -29,5 +29,7 @@ segmentation3d_parameter_investigation.ipynb
 # Jupyter Notebook
 .ipynb_checkpoints
 
+.virtual_documents
+
 
 /pyfiles/
